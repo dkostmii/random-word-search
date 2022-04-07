@@ -14,14 +14,8 @@ class SearchableArray extends Array {
         return results
     }
 
-    // Returns first element
-    first() {
-        if (this.length > 0) {
-            const [ f ] = this
-            return f
-        }
-    }
-
+    // Represents itself as an Array
+    // in String
     toString() {
         return Array.from(this).toString()
     }

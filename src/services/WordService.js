@@ -1,5 +1,6 @@
-import SearchableArray from "./SearchableArray"
+import SearchableArray from "../util/SearchableArray"
 
+// Service to fetch data from API
 class WordService {
     constructor() {
         this.baseUrl = "https://random-word-form.herokuapp.com/random/noun"
@@ -8,6 +9,7 @@ class WordService {
     }
 
 
+    // Check connection and validate data
     async preconnect() {
         const state = {
             success: false,
@@ -45,7 +47,7 @@ class WordService {
             return state
     }
 
-    // get the ASCII alphabet
+    // get the ASCII alphabet (["a", "b", "c" ... "z"])
     alphabet() {
         const startCharCode = 97
         const alphabetSize = 24
@@ -56,6 +58,7 @@ class WordService {
             .map(code => String.fromCharCode(code))
     }
 
+    // check if provided string is letter
     isLetter(letter) {
         if (typeof letter !== "string") {
             throw new TypeError(`${this.toString()} Expected letter to be string`)
@@ -68,6 +71,7 @@ class WordService {
         return this.alphabet().includes(letter)
     }
 
+    // fetch all words starting with letter
     async fetchByLetter(letter) {
         if (!this.isLetter(letter)) {
             throw new Error(`${this.toString()} Expected letter to be a letter`)
@@ -104,6 +108,7 @@ class WordService {
             .catch(e => console.error(e.toString()))
     }
 
+    // fetch {maxCount} words for each letter in alphabet
     async cache() {
         const result = await Promise.all(this.alphabet().map(letter => this.fetchByLetter(letter)))
         if (Array.isArray(result) && result.length > 0) {
@@ -114,6 +119,9 @@ class WordService {
         }
     }
 
+    // search for word
+    // s - search match ("hel" will match "hello")
+    // limit - limit count of words to return
     search(s, limit) {
         if (!["number", "undefined"].includes(typeof limit)) {
             throw new TypeError(`${this.toString()} Expected limit to be number or undefined. Got: ${typeof limit}`)
@@ -128,9 +136,11 @@ class WordService {
         return result
     }
 
+    // String representation
     toString() {
         return "[WordService]"
     }
 }
+
 
 export default WordService

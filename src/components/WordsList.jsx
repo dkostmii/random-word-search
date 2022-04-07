@@ -1,3 +1,4 @@
+// List search results
 function WordsList({ words }) {
     if (Array.isArray(words) && words.length > 0) {
         return (

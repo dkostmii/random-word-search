@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import Word from './Word'
-import WordService from './WordService'
+import Word from './components/Word'
+// used to cache words
+import WordService from './services/WordService'
 
 function App() {
     const [ services ] = useState({
@@ -13,6 +14,7 @@ function App() {
         loading: true
     })
 
+    // Preconnect and cache words when mounted
     useEffect(() => {
         const load = async () => {
             const { success, dataIsValid } = await services.wordService.preconnect()
@@ -54,6 +56,7 @@ function App() {
         }
     }
     else {
+        // Error occurred
         return (
             <div>
                 <h3>Error</h3>

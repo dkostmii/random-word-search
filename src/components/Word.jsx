@@ -2,9 +2,11 @@ import { useState } from 'react'
 
 import WordsList from './WordsList'
 
+// Search and list search results
 function Word({ wordService }) {
     const [words, setWords] = useState([])
 
+    // Update search
     const inputEvent = (e) => {
         setWords(
             Array.from(wordService.search(e.target.value, 40))
